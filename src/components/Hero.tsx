@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { Play, RotateCcw, Terminal as TerminalIcon, Cloud, Cpu, ShieldCheck, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -58,22 +59,6 @@ export default function Hero() {
     setLogs([]);
     setCurrentStep(0);
     setIsRunning(false);
-  };
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
   };
 
   return (
@@ -140,19 +125,19 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2"
             >
-              <button
-                onClick={() => scrollToSection("contact")}
+              <Link
+                href="/contact"
                 className="w-full sm:w-auto flex items-center justify-center px-8 py-4 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-brand-blue to-brand-cyan hover:opacity-95 shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all group"
               >
                 Start a Project
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button
-                onClick={() => scrollToSection("projects")}
+              </Link>
+              <Link
+                href="/projects"
                 className="w-full sm:w-auto flex items-center justify-center px-8 py-4 rounded-xl text-sm font-bold text-slate-300 bg-slate-900/60 border border-slate-800 hover:border-slate-700 hover:text-white transition-all backdrop-blur-sm"
               >
                 View Our Work
-              </button>
+              </Link>
             </motion.div>
 
             {/* Trust Badges */}
