@@ -141,13 +141,6 @@ export default function Footer() {
               >
                 deployforge0@gmail.com
               </a>
-
-              <div className="space-y-1.5 pt-3 border-t border-slate-900/60 text-[11px] text-slate-400 font-semibold">
-                <p className="font-bold text-white uppercase text-[9px] tracking-wider mb-2">Team Leads Contact</p>
-                <p><a href="tel:8087232380" className="hover:text-[#0082f6] transition-colors">8087232380</a> — Rushikesh Joshi</p>
-                <p><a href="tel:8767961588" className="hover:text-[#0082f6] transition-colors">8767961588</a> — Nihant Thorkar</p>
-                <p><a href="tel:7058466581" className="hover:text-[#0082f6] transition-colors">7058466581</a> — Yash Hedaoo</p>
-              </div>
             </div>
           </div>
         </div>

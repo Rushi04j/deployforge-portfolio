@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Mail, Globe, MapPin, Send, Terminal as TerminalIcon, Check, Phone } from "lucide-react";
+import { Mail, Globe, MapPin, Send, Terminal as TerminalIcon, Check } from "lucide-react";
 
 interface FormState {
   name: string;
@@ -286,24 +286,6 @@ export default function Contact() {
                 <div className="flex items-center space-x-3 text-xs font-semibold text-slate-300">
                   <MapPin className="h-4.5 w-4.5 text-[#8b5cf6] shrink-0" />
                   <span>Distributed globally &bull; Cloud native</span>
-                </div>
-                <div className="pt-2 border-t border-slate-900/60 space-y-2">
-                  <p className="text-[10px] font-bold text-white uppercase tracking-wider mb-1">Corporate Hotline</p>
-                  <div className="flex items-center space-x-3 text-xs font-semibold text-slate-300">
-                    <Phone className="h-3.5 w-3.5 text-brand-blue shrink-0" />
-                    <a href="tel:8087232380" className="hover:text-white hover:underline transition-all">8087232380</a>
-                    <span className="text-[10px] text-slate-500 font-normal">(Rushikesh Joshi)</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-xs font-semibold text-slate-300">
-                    <Phone className="h-3.5 w-3.5 text-brand-cyan shrink-0" />
-                    <a href="tel:8767961588" className="hover:text-white hover:underline transition-all">8767961588</a>
-                    <span className="text-[10px] text-slate-500 font-normal">(Nihant Thorkar)</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-xs font-semibold text-slate-300">
-                    <Phone className="h-3.5 w-3.5 text-brand-violet shrink-0" />
-                    <a href="tel:7058466581" className="hover:text-white hover:underline transition-all">7058466581</a>
-                    <span className="text-[10px] text-slate-500 font-normal">(Yash Hedaoo)</span>
-                  </div>
                 </div>
               </div>
             </div>

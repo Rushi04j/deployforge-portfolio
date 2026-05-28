@@ -5,30 +5,30 @@ import { motion } from "framer-motion";
 
 const testimonials = [
   {
-    name: "Sarah Jenkins",
-    role: "CEO, WealthFlow (FinTech SaaS)",
-    flag: "🇺🇸",
-    feedback: "DeployForge completely transformed our development and hosting pipeline. We went from stressful, manual releases to beautiful, fully automated 1-click deployments. The site load times are now instant and auto-scaling is perfect.",
+    name: "Verified Partner",
+    role: "Active Project",
+    flag: "",
+    feedback: "Client review coming soon — project in progress",
     rating: 5,
-    initials: "SJ",
+    initials: "DF",
     glow: "rgba(59,130,246,0.1)"
   },
   {
-    name: "Hiroshi Tanaka",
-    role: "CTO, MedTech Tokyo",
-    flag: "🇯🇵",
-    feedback: "We needed a secure, compliant clinic record portal under tight timelines. DeployForge designed an incredibly fast Next.js front-end and set up identical dev/prod environments using Docker. Highly recommended.",
+    name: "Verified Partner",
+    role: "Active Project",
+    flag: "",
+    feedback: "Client review coming soon — project in progress",
     rating: 5,
-    initials: "HT",
+    initials: "DF",
     glow: "rgba(6,182,212,0.1)"
   },
   {
-    name: "Alistair Vance",
-    role: "Founder, AeroTrack Logistics",
-    flag: "🇬🇧",
-    feedback: "The team built our real-time delivery telemetry map dashboard. Their DevOps setup handles our analytical peaks with zero hiccups. The user experience is state-of-the-art and conversions are up 35%.",
+    name: "Verified Partner",
+    role: "Active Project",
+    flag: "",
+    feedback: "Client review coming soon — project in progress",
     rating: 5,
-    initials: "AV",
+    initials: "DF",
     glow: "rgba(139,92,246,0.1)"
   }
 ];
