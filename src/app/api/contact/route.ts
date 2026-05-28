@@ -57,13 +57,16 @@ export async function POST(request: Request) {
       }
     }
 
-    // 2. Production Mode: Vercel KV (Redis REST API) Integration
-    if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+    // 2. Production Mode: Vercel KV / Upstash Redis (REST API) Integration
+    const kvUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+    const kvToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+
+    if (kvUrl && kvToken) {
       try {
-        const kvResponse = await fetch(process.env.KV_REST_API_URL, {
+        const kvResponse = await fetch(kvUrl, {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`,
+            Authorization: `Bearer ${kvToken}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(["LPUSH", "deployforge_contacts", JSON.stringify(newContact)]),
