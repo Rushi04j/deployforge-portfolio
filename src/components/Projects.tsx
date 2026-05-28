@@ -8,155 +8,108 @@ const projectCategories = ["All", "Full-Stack", "Cloud & DevOps"];
 
 const projects = [
   {
-    title: "Clinic Management System",
-    category: "Full-Stack",
-    desc: "Empowers healthcare clinics with real-time patient queueing telemetry, medical billing integrations, and secure cloud records complying with privacy policies.",
-    tags: ["Next.js", "PostgreSQL", "Docker", "Tailwind CSS"],
-    demoLink: "https://demo.deployforge.com/clinic",
-    gitLink: "https://github.com/deployforge/clinic-system",
-    // Premium custom mockup representation (SVG Dashboard styling)
-    mockup: (
-      <svg className="w-full h-full" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="220" rx="12" fill="#0b0f19" />
-        <rect x="15" y="15" width="10" height="10" rx="5" fill="#ef4444" />
-        <rect x="30" y="15" width="10" height="10" rx="5" fill="#f59e0b" />
-        <rect x="45" y="15" width="10" height="10" rx="5" fill="#10b981" />
-        <line x1="15" y1="40" x2="385" y2="40" stroke="#1e293b" strokeWidth="1" />
-        {/* Metric stats */}
-        <rect x="20" y="60" width="110" height="60" rx="8" fill="#151f32" stroke="#1e293b" />
-        <text x="30" y="80" fill="#94a3b8" fontSize="10" fontFamily="sans-serif">Patients In Queue</text>
-        <text x="30" y="105" fill="#3b82f6" fontSize="20" fontWeight="bold" fontFamily="sans-serif">42 Cases</text>
-        
-        <rect x="145" y="60" width="110" height="60" rx="8" fill="#151f32" stroke="#1e293b" />
-        <text x="155" y="80" fill="#94a3b8" fontSize="10" fontFamily="sans-serif">Uptime SLA</text>
-        <text x="155" y="105" fill="#10b981" fontSize="20" fontWeight="bold" fontFamily="sans-serif">100.0%</text>
-
-        <rect x="270" y="60" width="110" height="60" rx="8" fill="#151f32" stroke="#1e293b" />
-        <text x="280" y="80" fill="#94a3b8" fontSize="10" fontFamily="sans-serif">Billing Volume</text>
-        <text x="280" y="105" fill="#8b5cf6" fontSize="18" fontWeight="bold" fontFamily="sans-serif">$12,450</text>
-
-        {/* Database line visual */}
-        <rect x="20" y="138" width="360" height="62" rx="8" fill="#080c14" stroke="#1e293b" />
-        <text x="32" y="158" fill="#06b6d4" fontSize="10" fontFamily="monospace">&gt; db.patients.aggregate([ {"{ $match: { active: true } }"} ])</text>
-        <text x="32" y="174" fill="#64748b" fontSize="10" fontFamily="monospace">Executing query against primary AWS cluster...</text>
-        <text x="32" y="190" fill="#10b981" fontSize="10" fontFamily="monospace">Query OK. Returning 142 records. (12ms)</text>
-      </svg>
-    )
-  },
-  {
-    title: "Restaurant Dashboard",
-    category: "Full-Stack",
-    desc: "Real-time kitchen order tracking dashboard featuring analytical pipelines, live order status updates via WebSockets, and interactive table reservation menus.",
-    tags: ["React", "Node.js", "MongoDB", "Express", "Socket.io"],
-    demoLink: "https://demo.deployforge.com/restaurant",
-    gitLink: "https://github.com/deployforge/restaurant-hub",
-    mockup: (
-      <svg className="w-full h-full" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="220" rx="12" fill="#0b0f19" />
-        <rect x="15" y="15" width="10" height="10" rx="5" fill="#ef4444" />
-        <rect x="30" y="15" width="10" height="10" rx="5" fill="#f59e0b" />
-        <rect x="45" y="15" width="10" height="10" rx="5" fill="#10b981" />
-        <line x1="15" y1="40" x2="385" y2="40" stroke="#1e293b" strokeWidth="1" />
-        {/* Table representation */}
-        <rect x="20" y="55" width="170" height="145" rx="8" fill="#151f32" stroke="#1e293b" />
-        <text x="32" y="75" fill="#ffffff" fontSize="11" fontWeight="bold" fontFamily="sans-serif">Kitchen Prep Orders</text>
-        <rect x="32" y="88" width="146" height="28" rx="4" fill="#0b0f19" stroke="#1e293b" />
-        <text x="40" y="105" fill="#f59e0b" fontSize="9" fontWeight="semibold" fontFamily="sans-serif">#1204 - Filet Mignon</text>
-        <rect x="32" y="122" width="146" height="28" rx="4" fill="#0b0f19" stroke="#1e293b" />
-        <text x="40" y="139" fill="#f59e0b" fontSize="9" fontWeight="semibold" fontFamily="sans-serif">#1205 - Lobster Pasta</text>
-        <rect x="32" y="156" width="146" height="28" rx="4" fill="#0b0f19" stroke="#10b981" strokeWidth="0.5" />
-        <text x="40" y="173" fill="#10b981" fontSize="9" fontWeight="semibold" fontFamily="sans-serif">#1203 - Caesar Salad (Done)</text>
-
-        {/* Analytical bar chart visual */}
-        <rect x="210" y="55" width="170" height="145" rx="8" fill="#151f32" stroke="#1e293b" />
-        <text x="222" y="75" fill="#ffffff" fontSize="11" fontWeight="bold" fontFamily="sans-serif">Hourly Revenue Peak</text>
-        <rect x="235" y="100" width="18" height="80" rx="2" fill="#3b82f6" />
-        <rect x="265" y="120" width="18" height="60" rx="2" fill="#3b82f6" />
-        <rect x="295" y="90" width="18" height="90" rx="2" fill="#06b6d4" />
-        <rect x="325" y="135" width="18" height="45" rx="2" fill="#8b5cf6" />
-        <line x1="225" y1="180" x2="355" y2="180" stroke="#64748b" strokeWidth="1" />
-      </svg>
-    )
-  },
-  {
-    title: "Company Employee Portal",
-    category: "Full-Stack",
-    desc: "Centralized internal operations directory with vacations approval flow systems, corporate document sharing repository, and secure SSO portal authorization.",
-    tags: ["Next.js", "Tailwind CSS", "TypeScript", "Auth.js"],
-    demoLink: "https://demo.deployforge.com/portal",
-    gitLink: "https://github.com/deployforge/employee-portal",
-    mockup: (
-      <svg className="w-full h-full" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="220" rx="12" fill="#0b0f19" />
-        <rect x="15" y="15" width="10" height="10" rx="5" fill="#ef4444" />
-        <rect x="30" y="15" width="10" height="10" rx="5" fill="#f59e0b" />
-        <rect x="45" y="15" width="10" height="10" rx="5" fill="#10b981" />
-        <line x1="15" y1="40" x2="385" y2="40" stroke="#1e293b" strokeWidth="1" />
-        
-        {/* User profile list mockup */}
-        <circle cx="45" cy="75" r="16" fill="#1e293b" />
-        <text x="39" y="80" fill="#94a3b8" fontSize="14" fontFamily="sans-serif">JS</text>
-        <rect x="75" y="65" width="100" height="8" rx="4" fill="#ffffff" />
-        <rect x="75" y="78" width="60" height="6" rx="3" fill="#64748b" />
-        <rect x="300" y="66" width="60" height="18" rx="9" fill="#10b981" fillOpacity="0.15" stroke="#10b981" strokeWidth="0.5" />
-        <text x="315" y="78" fill="#10b981" fontSize="8" fontWeight="bold" fontFamily="sans-serif">APPROVED</text>
-
-        <circle cx="45" cy="120" r="16" fill="#1e293b" />
-        <text x="38" y="125" fill="#94a3b8" fontSize="14" fontFamily="sans-serif">AM</text>
-        <rect x="75" y="110" width="120" height="8" rx="4" fill="#ffffff" />
-        <rect x="75" y="123" width="80" height="6" rx="3" fill="#64748b" />
-        <rect x="300" y="111" width="60" height="18" rx="9" fill="#ef4444" fillOpacity="0.15" stroke="#ef4444" strokeWidth="0.5" />
-        <text x="317" y="123" fill="#ef4444" fontSize="8" fontWeight="bold" fontFamily="sans-serif">PENDING</text>
-
-        <circle cx="45" cy="165" r="16" fill="#1e293b" />
-        <text x="39" y="170" fill="#94a3b8" fontSize="14" fontFamily="sans-serif">TH</text>
-        <rect x="75" y="155" width="90" height="8" rx="4" fill="#ffffff" />
-        <rect x="75" y="168" width="50" height="6" rx="3" fill="#64748b" />
-        <rect x="300" y="156" width="60" height="18" rx="9" fill="#10b981" fillOpacity="0.15" stroke="#10b981" strokeWidth="0.5" />
-        <text x="315" y="168" fill="#10b981" fontSize="8" fontWeight="bold" fontFamily="sans-serif">APPROVED</text>
-        
-        <line x1="20" y1="102" x2="380" y2="102" stroke="#1e293b" strokeWidth="0.5" />
-        <line x1="20" y1="147" x2="380" y2="147" stroke="#1e293b" strokeWidth="0.5" />
-      </svg>
-    )
-  },
-  {
-    title: "Cloud Deployment Automation",
+    title: "CyberSuraksha",
     category: "Cloud & DevOps",
-    desc: "A custom engineered SaaS automation platform triggering Docker deployment pipelines with automatic SSL provisioning, reverse proxy configs, and cluster load metrics.",
-    tags: ["React", "Go", "Docker", "Nginx", "AWS", "Terraform"],
-    demoLink: "https://demo.deployforge.com/cloudops",
-    gitLink: "https://github.com/deployforge/cloud-automation",
+    desc: "A defense-grade, comprehensive cybersecurity ecosystem bridging the gap between citizens, law enforcement, and legal aid. Houses a Voice FIR engine, client-side diagnostics scanners, and live geospatial threat mapping.",
+    tags: ["Next.js 16", "Supabase", "PostgreSQL", "Tailwind v4", "Leaflet"],
+    demoLink: "https://v0-cybersuraksha-landing-page.vercel.app/",
+    // Custom premium vector mockup mimicking CyberSuraksha threat shield & waveform
+    mockup: (
+      <svg className="w-full h-full" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="220" rx="12" fill="#030712" />
+        {/* Terminal Header */}
+        <rect x="15" y="15" width="8" height="8" rx="4" fill="#ef4444" />
+        <rect x="27" y="15" width="8" height="8" rx="4" fill="#f59e0b" />
+        <rect x="39" y="15" width="8" height="8" rx="4" fill="#10b981" />
+        <line x1="15" y1="35" x2="385" y2="35" stroke="#1e293b" strokeWidth="1" />
+        
+        {/* Shield outline */}
+        <path d="M200 50 C215 50 250 55 250 90 C250 120 200 140 200 145 C200 140 150 120 150 90 C150 55 185 50 200 50 Z" stroke="#3b82f6" strokeWidth="2" fill="#0d1527" />
+        <circle cx="200" cy="95" r="22" fill="#030712" stroke="#06b6d4" strokeWidth="1.5" className="animate-pulse" />
+        <path d="M194 95 L198 99 L208 89" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        
+        {/* Multilingual Voice wave line */}
+        <path d="M80 170 Q 95 140, 110 170 T 140 170 T 170 170 T 200 170 T 230 170 T 260 170 T 290 170 T 320 170" stroke="#06b6d4" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+        <text x="140" y="195" fill="#64748b" fontSize="9" fontFamily="monospace">Voice FIR Decryptor: Online</text>
+        <text x="20" y="60" fill="#94a3b8" fontSize="8" fontFamily="monospace">STATUS: ARMED</text>
+        <text x="310" y="60" fill="#10b981" fontSize="8" fontFamily="monospace">GEO SCAN: OK</text>
+      </svg>
+    )
+  },
+  {
+    title: "JavaScript Escape Room",
+    category: "Full-Stack",
+    desc: "A logic-driven coding game designed to teach JavaScript and frontend principles through an immersive escape-room experience. Architecture is split into decoupled micro-repositories to model clean separations.",
+    tags: ["Node.js", "Express", "MongoDB", "JWT Auth", "Vanilla JS"],
+    demoLink: "https://landingpage-xi-flax.vercel.app/",
+    // Custom coding puzzle terminal mockup
     mockup: (
       <svg className="w-full h-full" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="400" height="220" rx="12" fill="#0b0f19" />
-        <rect x="15" y="15" width="10" height="10" rx="5" fill="#ef4444" />
-        <rect x="30" y="15" width="10" height="10" rx="5" fill="#f59e0b" />
-        <rect x="45" y="15" width="10" height="10" rx="5" fill="#10b981" />
-        <line x1="15" y1="40" x2="385" y2="40" stroke="#1e293b" strokeWidth="1" />
-        
-        {/* Network Topography visual map */}
-        <rect x="25" y="55" width="140" height="145" rx="8" fill="#151f32" stroke="#1e293b" />
-        <text x="35" y="75" fill="#ffffff" fontSize="10" fontWeight="bold" fontFamily="sans-serif">Nodes Cluster</text>
-        
-        <rect x="35" y="90" width="120" height="24" rx="4" fill="#0b0f19" stroke="#3b82f6" />
-        <text x="45" y="105" fill="#3b82f6" fontSize="9" fontWeight="bold" fontFamily="monospace">VPC-Primary (US-East)</text>
-        
-        <rect x="35" y="122" width="120" height="24" rx="4" fill="#0b0f19" stroke="#10b981" />
-        <text x="45" y="137" fill="#10b981" fontSize="9" fontWeight="bold" fontFamily="monospace">Task-1: ECS Container</text>
-        
-        <rect x="35" y="154" width="120" height="24" rx="4" fill="#0b0f19" stroke="#8b5cf6" />
-        <text x="45" y="169" fill="#8b5cf6" fontSize="9" fontWeight="bold" fontFamily="monospace">Task-2: ECS Container</text>
+        <rect x="15" y="15" width="8" height="8" rx="4" fill="#ef4444" />
+        <rect x="27" y="15" width="8" height="8" rx="4" fill="#f59e0b" />
+        <rect x="39" y="15" width="8" height="8" rx="4" fill="#10b981" />
+        <line x1="15" y1="35" x2="385" y2="35" stroke="#1e293b" strokeWidth="1" />
 
-        {/* Terminal logging side */}
-        <rect x="180" y="55" width="195" height="145" rx="8" fill="#080c14" stroke="#1e293b" />
-        <text x="190" y="75" fill="#10b981" fontSize="9" fontFamily="monospace"># terraform apply -auto-approve</text>
-        <text x="190" y="90" fill="#94a3b8" fontSize="8" fontFamily="monospace">aws_instance.prod_cluster: Creating...</text>
-        <text x="190" y="105" fill="#94a3b8" fontSize="8" fontFamily="monospace">aws_security_group.sg_web: Creating...</text>
-        <text x="190" y="120" fill="#10b981" fontSize="8" fontFamily="monospace">Apply complete! Resources: 3 added.</text>
-        <text x="190" y="145" fill="#3b82f6" fontSize="9" fontFamily="monospace"># docker ps</text>
-        <text x="190" y="160" fill="#94a3b8" fontSize="8" fontFamily="monospace">PORTS: 0.0.0.0:80-&gt;80/tcp</text>
-        <text x="190" y="175" fill="#06b6d4" fontSize="8" fontFamily="monospace">NAMES: deployforge_nginx_proxy</text>
+        {/* Lock indicator */}
+        <rect x="20" y="55" width="130" height="145" rx="8" fill="#151f32" stroke="#1e293b" />
+        <text x="30" y="75" fill="#ffffff" fontSize="11" fontWeight="bold" fontFamily="sans-serif">System Encryption</text>
+        <rect x="35" y="90" width="100" height="40" rx="6" fill="#0b0f19" stroke="#ef4444" strokeWidth="1" />
+        <text x="45" y="114" fill="#ef4444" fontSize="14" fontWeight="bold" fontFamily="monospace">🔒 LOCKED</text>
+        <text x="42" y="160" fill="#94a3b8" fontSize="10" fontFamily="sans-serif">Timer: </text>
+        <text x="75" y="161" fill="#f59e0b" fontSize="12" fontWeight="bold" fontFamily="monospace">08:42.15</text>
+
+        {/* Javascript block lines */}
+        <rect x="165" y="55" width="215" height="145" rx="8" fill="#05070d" stroke="#1e293b" />
+        <text x="175" y="75" fill="#3b82f6" fontSize="10" fontFamily="monospace">function escapeRoom(key) &#123;</text>
+        <text x="190" y="95" fill="#f59e0b" fontSize="10" fontFamily="monospace">if (key === &quot;JS_CODE&quot;) &#123;</text>
+        <text x="205" y="115" fill="#10b981" fontSize="10" fontFamily="monospace">unlockDoor();</text>
+        <text x="205" y="135" fill="#94a3b8" fontSize="10" fontFamily="monospace">return true;</text>
+        <text x="190" y="155" fill="#f59e0b" fontSize="10" fontFamily="monospace">&#125;</text>
+        <text x="175" y="175" fill="#3b82f6" fontSize="10" fontFamily="monospace">&#125;</text>
+      </svg>
+    )
+  },
+  {
+    title: "Institute Management System (IMS)",
+    category: "Full-Stack",
+    desc: "A modern institutional portal digitizing workflows for Students, Faculty, and Admin. Handles attendance metrics, auto-generated reports, role-based controls (RBAC), and multi-level certificate request approvals.",
+    tags: ["React", "Vite", "Node.js", "MongoDB", "Docker", "Nginx"],
+    demoLink: "https://institutemanagement-alpha.vercel.app",
+    // Custom administration dashboard mockup
+    mockup: (
+      <svg className="w-full h-full" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="220" rx="12" fill="#090d16" />
+        <rect x="15" y="15" width="8" height="8" rx="4" fill="#ef4444" />
+        <rect x="27" y="15" width="8" height="8" rx="4" fill="#f59e0b" />
+        <rect x="39" y="15" width="8" height="8" rx="4" fill="#10b981" />
+        <line x1="15" y1="35" x2="385" y2="35" stroke="#1e293b" strokeWidth="1" />
+        
+        {/* Attendance stats */}
+        <rect x="20" y="50" width="110" height="60" rx="8" fill="#111827" stroke="#1e293b" />
+        <text x="30" y="70" fill="#94a3b8" fontSize="10" fontFamily="sans-serif">Attendance Avg</text>
+        <text x="30" y="95" fill="#10b981" fontSize="18" fontWeight="bold" fontFamily="sans-serif">87.5%</text>
+
+        {/* Requests status */}
+        <rect x="145" y="50" width="110" height="60" rx="8" fill="#111827" stroke="#1e293b" />
+        <text x="155" y="70" fill="#94a3b8" fontSize="10" fontFamily="sans-serif">Active Requests</text>
+        <text x="155" y="95" fill="#3b82f6" fontSize="18" fontWeight="bold" fontFamily="sans-serif">4 Pending</text>
+
+        {/* Portals tags */}
+        <rect x="270" y="50" width="110" height="60" rx="8" fill="#111827" stroke="#1e293b" />
+        <text x="280" y="70" fill="#94a3b8" fontSize="10" fontFamily="sans-serif">Active Portals</text>
+        <text x="280" y="95" fill="#8b5cf6" fontSize="16" fontWeight="bold" fontFamily="sans-serif">Student/Admin</text>
+
+        {/* Approvals table grid */}
+        <rect x="20" y="125" width="360" height="75" rx="8" fill="#04060b" stroke="#1e293b" />
+        <text x="30" y="145" fill="#ffffff" fontSize="9" fontWeight="bold" fontFamily="sans-serif">Request Approvals Pipeline</text>
+        <text x="30" y="165" fill="#94a3b8" fontSize="8" fontFamily="sans-serif">Bonafide Cert - ID: #1042</text>
+        <rect x="290" y="155" width="55" height="14" rx="7" fill="#10b981" fillOpacity="0.1" stroke="#10b981" strokeWidth="0.5" />
+        <text x="302" y="165" fill="#10b981" fontSize="7" fontWeight="bold" fontFamily="sans-serif">APPROVED</text>
+
+        <text x="30" y="185" fill="#94a3b8" fontSize="8" fontFamily="sans-serif">Leave App - ID: #1043</text>
+        <rect x="290" y="175" width="55" height="14" rx="7" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" strokeWidth="0.5" />
+        <text x="304" y="185" fill="#f59e0b" fontSize="7" fontWeight="bold" fontFamily="sans-serif">PENDING</text>
       </svg>
     )
   }
@@ -207,7 +160,7 @@ export default function Projects() {
         </div>
 
         {/* Filtered Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <AnimatePresence mode="wait">
             {filteredProjects.map((project, index) => (
               <motion.div
@@ -229,7 +182,7 @@ export default function Projects() {
                   {/* Project Details */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-bold text-white tracking-tight group-hover:text-brand-blue transition-colors">
+                      <h3 className="text-base font-bold text-white tracking-tight group-hover:text-brand-blue transition-colors">
                         {project.title}
                       </h3>
                       <span className="inline-flex items-center px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono font-bold text-slate-400 uppercase">
@@ -260,24 +213,12 @@ export default function Projects() {
                   {/* CTAs */}
                   <div className="flex items-center space-x-3 shrink-0">
                     <a
-                      href={project.gitLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center h-8.5 px-3.5 rounded-lg text-xs font-bold text-slate-300 bg-slate-900 border border-slate-800 hover:border-slate-700 hover:text-white transition-all duration-300"
-                    >
-                      <svg className="h-3.5 w-3.5 mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                        <path d="M9 18c-4.51 2-5-2-7-2" />
-                      </svg>
-                      <span>Code</span>
-                    </a>
-                    <a
                       href={project.demoLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center h-8.5 px-3.5 rounded-lg text-xs font-bold text-white bg-gradient-to-r from-brand-blue to-brand-cyan hover:opacity-90 transition-all duration-300 shadow-[0_0_10px_rgba(59,130,246,0.2)]"
                     >
-                      <span>Demo</span>
+                      <span>Live Demo</span>
                       <ExternalLink className="h-3.5 w-3.5 ml-1.5" />
                     </a>
                   </div>
