@@ -1,27 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowUp } from "lucide-react";
 import { LogoIcon } from "@/components/Logo";
 
 export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
   };
 
   return (
@@ -33,12 +18,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-16 border-b border-slate-900">
           {/* Logo and Tagline */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2.5 cursor-pointer" onClick={scrollToTop}>
-              <LogoIcon size={32} />
+            <Link href="/" className="inline-flex items-center space-x-2.5 cursor-pointer group">
+              <LogoIcon size={32} className="group-hover:rotate-6 transition-transform" />
               <span className="text-lg font-bold tracking-tight text-white font-sans uppercase">
                 Deploy<span className="text-[#0082f6]">Forge</span>
               </span>
-            </div>
+            </Link>
             <p className="text-sm text-slate-400 font-medium">
               From Code to Cloud — Development to Deployment. We engineer premium digital solutions tailored to scale your enterprise.
             </p>
@@ -94,12 +79,12 @@ export default function Footer() {
             <ul className="space-y-3">
               {["about", "services", "process", "projects", "pricing"].map((item) => (
                 <li key={item}>
-                  <button
-                    onClick={() => scrollToSection(item)}
+                  <Link
+                    href={`/${item}`}
                     className="text-sm text-slate-400 hover:text-white transition-colors duration-200 capitalize font-medium"
                   >
                     {item.replace("-", " ")}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -117,12 +102,12 @@ export default function Footer() {
                 "Custom SaaS Platforms",
               ].map((service) => (
                 <li key={service}>
-                  <button
-                    onClick={() => scrollToSection("services")}
+                  <Link
+                    href="/services"
                     className="text-sm text-slate-400 hover:text-white text-left transition-colors duration-200 font-medium"
                   >
                     {service}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>

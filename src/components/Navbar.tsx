@@ -1,23 +1,26 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LogoIcon } from "@/components/Logo";
 
 const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Process", href: "#process" },
-  { name: "Tech Stack", href: "#tech-stack" },
-  { name: "Projects", href: "#projects" },
-  { name: "Why Us", href: "#why-us" },
-  { name: "Pricing", href: "#pricing" },
+  { name: "About", href: "/about" },
+  { name: "Services", href: "/services" },
+  { name: "Process", href: "/process" },
+  { name: "Tech Stack", href: "/tech-stack" },
+  { name: "Projects", href: "/projects" },
+  { name: "Why Us", href: "/why-us" },
+  { name: "Pricing", href: "/pricing" },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,67 +34,64 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
+  // Close mobile drawer on route change
+  useEffect(() => {
     setIsOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80; // height of navbar
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  };
+  }, [pathname]);
 
   return (
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "bg-background/70 backdrop-blur-md border-b border-slate-800/80 py-4"
+          ? "bg-[#030712]/75 backdrop-blur-md border-b border-slate-900 py-4"
           : "bg-transparent py-6"
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div 
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="flex cursor-pointer items-center space-x-2.5 text-white"
+          <Link 
+            href="/"
+            className="flex items-center space-x-2.5 text-white group cursor-pointer select-none"
           >
-            <LogoIcon size={32} />
+            <LogoIcon size={32} className="group-hover:rotate-6 transition-transform" />
             <span className="text-xl font-bold tracking-tight text-white font-sans uppercase">
               Deploy<span className="text-[#0082f6]">Forge</span>
             </span>
-          </div>
+          </Link>
 
           {/* Desktop Nav Links */}
           <nav className="hidden lg:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => scrollToSection(link.href.substring(1))}
-                className="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 relative group"
-              >
-                {link.name}
-                <span className="absolute bottom-[-4px] left-0 w-0 h-[2px] bg-gradient-to-r from-brand-blue to-brand-cyan transition-all duration-300 group-hover:w-full" />
-              </button>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`text-sm font-medium transition-colors duration-200 relative group ${
+                    isActive ? "text-white" : "text-slate-300 hover:text-white"
+                  }`}
+                >
+                  {link.name}
+                  <span 
+                    className={`absolute bottom-[-4px] left-0 h-[2px] bg-gradient-to-r from-brand-blue to-brand-cyan transition-all duration-300 ${
+                      isActive ? "w-full" : "w-0 group-hover:w-full"
+                    }`} 
+                  />
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Desktop CTA */}
           <div className="hidden lg:block">
-            <button
-              onClick={() => scrollToSection("contact")}
+            <Link
+              href="/contact"
               className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-slate-900 border border-slate-800 hover:border-brand-blue/50 hover:bg-slate-950 transition-all duration-300 group shadow-lg"
             >
               Start a Project
               <ArrowRight className="ml-2 h-4 w-4 text-brand-blue group-hover:translate-x-1 transition-transform" />
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -118,23 +118,28 @@ export default function Navbar() {
             className="absolute top-full left-0 w-full bg-slate-950/95 border-b border-slate-900 backdrop-blur-lg lg:hidden"
           >
             <div className="px-4 pt-4 pb-6 space-y-3">
-              {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => scrollToSection(link.href.substring(1))}
-                  className="block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-colors"
-                >
-                  {link.name}
-                </button>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`block w-full px-4 py-3 rounded-xl text-base font-medium transition-colors ${
+                      isActive ? "text-white bg-slate-900/60" : "text-slate-300 hover:text-white hover:bg-slate-900"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
               <div className="pt-4 border-t border-slate-900">
-                <button
-                  onClick={() => scrollToSection("contact")}
+                <Link
+                  href="/contact"
                   className="flex w-full items-center justify-center px-4 py-3.5 rounded-xl text-base font-semibold text-white bg-gradient-to-r from-brand-blue to-brand-cyan hover:opacity-90 shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all"
                 >
                   Start a Project
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </button>
+                </Link>
               </div>
             </div>
           </motion.div>
