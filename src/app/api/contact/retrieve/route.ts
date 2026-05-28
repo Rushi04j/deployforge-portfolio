@@ -79,14 +79,36 @@ export async function GET(request: Request) {
           const errText = await kvResponse.text();
           console.error("Upstash Redis Retrieve REST Error:", kvResponse.status, errText);
           return NextResponse.json(
-            { success: false, error: `Upstash Redis Retrieve REST Error [${kvResponse.status}]: ${errText || "Invalid token or URL"}` },
+            { 
+              success: false, 
+              error: `Upstash Redis Retrieve REST Error [${kvResponse.status}]: ${errText || "Invalid token or URL"}`,
+              debug: {
+                rawUrlLength: kvUrl?.length,
+                rawUrlStart: kvUrl?.substring(0, 15),
+                rawUrlEnd: kvUrl ? kvUrl.substring(kvUrl.length - 5) : "",
+                rawTokenLength: kvToken?.length,
+                rawTokenStart: kvToken?.substring(0, 6),
+                rawTokenEnd: kvToken ? kvToken.substring(kvToken.length - 6) : "",
+                cleanUrlLength: cleanKvUrl.length,
+                cleanUrlStart: cleanKvUrl.substring(0, 15),
+                cleanTokenLength: cleanKvToken.length,
+                cleanTokenStart: cleanKvToken.substring(0, 6),
+              }
+            },
             { status: 500 }
           );
         }
       } catch (kvError: any) {
         console.error("Vercel KV Retrieval Failed:", kvError);
         return NextResponse.json(
-          { success: false, error: `Upstash Redis Retrieve Network Error: ${kvError.message || "Failed to resolve endpoint"}` },
+          { 
+            success: false, 
+            error: `Upstash Redis Retrieve Network Error: ${kvError.message || "Failed to resolve endpoint"}`,
+            debug: {
+              rawUrlLength: kvUrl?.length,
+              rawTokenLength: kvToken?.length,
+            }
+          },
           { status: 500 }
         );
       }
