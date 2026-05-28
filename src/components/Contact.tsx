@@ -26,7 +26,7 @@ export default function Contact() {
     "[system] Awaiting user interaction..."
   ]);
   
-  const terminalEndRef = useRef<HTMLDivElement>(null);
+  const terminalContainerRef = useRef<HTMLDivElement>(null);
 
   // Add terminal logs
   const log = (msg: string) => {
@@ -34,8 +34,8 @@ export default function Contact() {
   };
 
   useEffect(() => {
-    if (terminalEndRef.current) {
-      terminalEndRef.current.scrollIntoView({ behavior: "smooth" });
+    if (terminalContainerRef.current) {
+      terminalContainerRef.current.scrollTop = terminalContainerRef.current.scrollHeight;
     }
   }, [terminalLogs]);
 
@@ -294,7 +294,7 @@ export default function Contact() {
               </div>
 
               {/* Console log box */}
-              <div className="flex-1 p-4 bg-slate-950/40 font-mono text-[10px] overflow-y-auto space-y-1.5 select-none scrollbar-thin max-h-[220px] lg:max-h-none">
+              <div ref={terminalContainerRef} className="flex-1 p-4 bg-slate-950/40 font-mono text-[10px] overflow-y-auto space-y-1.5 select-none scrollbar-thin max-h-[220px] lg:max-h-none">
                 {terminalLogs.map((item, idx) => (
                   <div key={idx} className="leading-relaxed">
                     {item.includes("[system]") && (
@@ -317,7 +317,6 @@ export default function Contact() {
                     )}
                   </div>
                 ))}
-                <div ref={terminalEndRef} />
               </div>
             </div>
 
