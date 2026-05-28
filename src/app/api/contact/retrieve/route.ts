@@ -36,8 +36,12 @@ export async function GET(request: Request) {
           count: contacts.length,
           contacts,
         });
-      } catch (dbError) {
-        console.error("MongoDB Retrieval Failed, falling back to next storage:", dbError);
+      } catch (dbError: any) {
+        console.error("MongoDB Retrieval Failed:", dbError);
+        return NextResponse.json(
+          { success: false, error: `MongoDB Retrieval Failed: ${dbError.message || "Unknown database error"}` },
+          { status: 500 }
+        );
       }
     }
 
@@ -47,10 +51,14 @@ export async function GET(request: Request) {
 
     if (kvUrl && kvToken) {
       try {
-        const kvResponse = await fetch(kvUrl, {
+        // Sanitize credentials to handle any accidental copy-paste quotes or whitespace
+        const cleanKvUrl = kvUrl.trim().replace(/^"|"$/g, "");
+        const cleanKvToken = kvToken.trim().replace(/^"|"$/g, "");
+
+        const kvResponse = await fetch(cleanKvUrl, {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${kvToken}`,
+            Authorization: `Bearer ${cleanKvToken}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(["LRANGE", "deployforge_contacts", "0", "-1"]),
@@ -67,9 +75,20 @@ export async function GET(request: Request) {
             count: contacts.length,
             contacts,
           });
+        } else {
+          const errText = await kvResponse.text();
+          console.error("Upstash Redis Retrieve REST Error:", kvResponse.status, errText);
+          return NextResponse.json(
+            { success: false, error: `Upstash Redis Retrieve REST Error [${kvResponse.status}]: ${errText || "Invalid token or URL"}` },
+            { status: 500 }
+          );
         }
-      } catch (kvError) {
-        console.error("Vercel KV Retrieval Failed, trying fallback storage:", kvError);
+      } catch (kvError: any) {
+        console.error("Vercel KV Retrieval Failed:", kvError);
+        return NextResponse.json(
+          { success: false, error: `Upstash Redis Retrieve Network Error: ${kvError.message || "Failed to resolve endpoint"}` },
+          { status: 500 }
+        );
       }
     }
 

@@ -52,8 +52,12 @@ export async function POST(request: Request) {
           simulated: false,
           data: { id: newContact.id },
         });
-      } catch (dbError) {
-        console.error("MongoDB Connection Failed, falling back to next storage:", dbError);
+      } catch (dbError: any) {
+        console.error("MongoDB Connection Failed:", dbError);
+        return NextResponse.json(
+          { success: false, error: `MongoDB Cluster Integration Failed: ${dbError.message || "Unknown database error"}` },
+          { status: 500 }
+        );
       }
     }
 
@@ -63,10 +67,14 @@ export async function POST(request: Request) {
 
     if (kvUrl && kvToken) {
       try {
-        const kvResponse = await fetch(kvUrl, {
+        // Sanitize credentials to handle any accidental copy-paste quotes or whitespace
+        const cleanKvUrl = kvUrl.trim().replace(/^"|"$/g, "");
+        const cleanKvToken = kvToken.trim().replace(/^"|"$/g, "");
+
+        const kvResponse = await fetch(cleanKvUrl, {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${kvToken}`,
+            Authorization: `Bearer ${cleanKvToken}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(["LPUSH", "deployforge_contacts", JSON.stringify(newContact)]),
@@ -79,9 +87,20 @@ export async function POST(request: Request) {
             simulated: false,
             data: { id: newContact.id },
           });
+        } else {
+          const errText = await kvResponse.text();
+          console.error("Upstash Redis REST Error:", kvResponse.status, errText);
+          return NextResponse.json(
+            { success: false, error: `Upstash Redis REST Error [${kvResponse.status}]: ${errText || "Invalid token or URL"}` },
+            { status: 500 }
+          );
         }
-      } catch (kvError) {
-        console.error("Vercel KV Connection Failed, trying fallback storage:", kvError);
+      } catch (kvError: any) {
+        console.error("Vercel KV Connection Failed:", kvError);
+        return NextResponse.json(
+          { success: false, error: `Upstash Redis Network/Fetch Error: ${kvError.message || "Failed to resolve endpoint"}` },
+          { status: 500 }
+        );
       }
     }
 
