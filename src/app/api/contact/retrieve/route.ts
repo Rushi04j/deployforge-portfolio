@@ -37,7 +37,36 @@ export async function GET(request: Request) {
           contacts,
         });
       } catch (dbError) {
-        console.error("MongoDB Retrieval Failed, falling back to Local JSON:", dbError);
+        console.error("MongoDB Retrieval Failed, falling back to next storage:", dbError);
+      }
+    }
+
+    // 2. Production Mode: Vercel KV (Redis REST API) retrieval
+    if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+      try {
+        const kvResponse = await fetch(process.env.KV_REST_API_URL, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(["LRANGE", "deployforge_contacts", "0", "-1"]),
+        });
+
+        if (kvResponse.ok) {
+          const result = await kvResponse.json();
+          const rawContacts = result.result || [];
+          const contacts = rawContacts.map((c: string) => JSON.parse(c));
+
+          return NextResponse.json({
+            success: true,
+            source: "Vercel KV Storage",
+            count: contacts.length,
+            contacts,
+          });
+        }
+      } catch (kvError) {
+        console.error("Vercel KV Retrieval Failed, trying fallback storage:", kvError);
       }
     }
 

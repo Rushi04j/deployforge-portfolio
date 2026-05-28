@@ -53,7 +53,32 @@ export async function POST(request: Request) {
           data: { id: newContact.id },
         });
       } catch (dbError) {
-        console.error("MongoDB Connection Failed, falling back to Local DB:", dbError);
+        console.error("MongoDB Connection Failed, falling back to next storage:", dbError);
+      }
+    }
+
+    // 2. Production Mode: Vercel KV (Redis REST API) Integration
+    if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+      try {
+        const kvResponse = await fetch(process.env.KV_REST_API_URL, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(["LPUSH", "deployforge_contacts", JSON.stringify(newContact)]),
+        });
+
+        if (kvResponse.ok) {
+          return NextResponse.json({
+            success: true,
+            message: "Request successfully saved in Vercel KV Storage.",
+            simulated: false,
+            data: { id: newContact.id },
+          });
+        }
+      } catch (kvError) {
+        console.error("Vercel KV Connection Failed, trying fallback storage:", kvError);
       }
     }
 
