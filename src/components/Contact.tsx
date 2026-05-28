@@ -78,33 +78,29 @@ export default function Contact() {
     }
 
     log("[success] Inputs audited. 0 warnings. 0 errors.");
-    log("[info] Connecting to Web3Forms secure email gateway...");
+    log("[info] Connecting to DeployForge secure database gateway...");
     log("[info] Dispatching post payload JSON package...");
 
     try {
-      // We will POST to Web3Forms using their standard fetch API
-      const response = await fetch("https://api.web3forms.com/submit", {
+      // POST directly to our new Next.js backend API Route
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({
-          access_key: "YOUR_ACCESS_KEY_HERE", // Standard Web3Forms API Key placeholder. User can configure later.
-          name: form.name,
-          email: form.email,
-          project_type: form.projectType,
-          budget: form.budget,
-          message: form.message,
-          subject: `New DeployForge Project Inquiry from ${form.name}`,
-        }),
+        body: JSON.stringify(form),
       });
 
       const result = await response.json();
 
-      if (response.status === 200 || result.success) {
+      if (response.status === 200 && result.success) {
         setStatus("success");
-        log("[success] Transmission complete! Web3Forms returned 200 OK.");
+        if (result.simulated) {
+          log("[success] Transmission complete! Request saved in Local JSON DB.");
+        } else {
+          log("[success] Transmission complete! Request saved in MongoDB Cluster.");
+        }
         log("[highlight] SUCCESS: DeployForge will respond in under 48 hours.");
         setForm({
           name: "",
@@ -114,16 +110,12 @@ export default function Contact() {
           message: "",
         });
       } else {
-        // Fallback for demonstration / local testing or incorrect key
-        setStatus("success");
-        log("[warn] Web3Forms API key is a placeholder. Form simulated successfully!");
-        log("[highlight] SUCCESS (SIMULATED): We will reach out in under 48 hours.");
+        setStatus("error");
+        log(`[error] Transmission FAILED: ${result.error || "Unknown server response."}`);
       }
     } catch {
-      // Even if network fails, let's gracefully fallback and simulate success for the demo so they aren't blocked by missing access keys!
-      setStatus("success");
-      log("[warn] Local simulation active. Form payload processed.");
-      log("[highlight] SUCCESS: Thank you! We will reach out to you within 48 hours.");
+      setStatus("error");
+      log("[error] Critical transmission failure. Backend API unreachable.");
     }
   };
 

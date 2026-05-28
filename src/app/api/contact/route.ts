@@ -1,0 +1,93 @@
+import { NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
+import { MongoClient } from "mongodb";
+
+const LOCAL_DB_PATH = path.join(process.cwd(), "src", "data", "contacts.json");
+
+interface ContactPayload {
+  name: string;
+  email: string;
+  projectType: string;
+  budget: string;
+  message: string;
+}
+
+export async function POST(request: Request) {
+  try {
+    const body: ContactPayload = await request.json();
+    const { name, email, projectType, budget, message } = body;
+
+    // Server-side audit validations
+    if (!name?.trim() || !email?.trim() || !message?.trim()) {
+      return NextResponse.json(
+        { success: false, error: "Validation FAILED: Staged parameters are empty." },
+        { status: 400 }
+      );
+    }
+
+    const newContact = {
+      id: Math.random().toString(36).substring(2, 11),
+      name: name.trim(),
+      email: email.trim(),
+      projectType,
+      budget,
+      message: message.trim(),
+      createdAt: new Date().toISOString(),
+    };
+
+    // 1. Production Mode: MongoDB Integration
+    if (process.env.MONGODB_URI) {
+      try {
+        const client = new MongoClient(process.env.MONGODB_URI);
+        await client.connect();
+        const db = client.db("deployforge");
+        const collection = db.collection("contacts");
+        await collection.insertOne(newContact);
+        await client.close();
+
+        return NextResponse.json({
+          success: true,
+          message: "Request successfully saved in primary MongoDB cluster.",
+          simulated: false,
+          data: { id: newContact.id },
+        });
+      } catch (dbError) {
+        console.error("MongoDB Connection Failed, falling back to Local DB:", dbError);
+      }
+    }
+
+    // 2. Local Fallback Mode: JSON file-based storage
+    const dirPath = path.dirname(LOCAL_DB_PATH);
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+
+    let contactsList: typeof newContact[] = [];
+    if (fs.existsSync(LOCAL_DB_PATH)) {
+      try {
+        const fileContent = fs.readFileSync(LOCAL_DB_PATH, "utf-8");
+        contactsList = JSON.parse(fileContent || "[]");
+      } catch (readError) {
+        console.error("Failed to parse local JSON db, resetting database:", readError);
+      }
+    }
+
+    contactsList.push(newContact);
+    fs.writeFileSync(LOCAL_DB_PATH, JSON.stringify(contactsList, null, 2), "utf-8");
+
+    return NextResponse.json({
+      success: true,
+      message: "Request successfully saved locally (Fallback JSON Active).",
+      simulated: true,
+      data: { id: newContact.id },
+    });
+
+  } catch (error) {
+    console.error("API Error in /api/contact:", error);
+    return NextResponse.json(
+      { success: false, error: "Internal Server Error in DeployForge endpoint." },
+      { status: 500 }
+    );
+  }
+}
