@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Server, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { LogoIcon } from "@/components/Logo";
 
 const navLinks = [
   { name: "About", href: "#about" },
@@ -62,11 +63,9 @@ export default function Navbar() {
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="flex cursor-pointer items-center space-x-2.5 text-white"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-blue to-brand-cyan shadow-[0_0_15px_rgba(59,130,246,0.5)]">
-              <Server className="h-5 w-5 text-white animate-pulse" />
-            </div>
-            <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-              Deploy<span className="text-brand-blue font-extrabold">Forge</span>
+            <LogoIcon size={32} />
+            <span className="text-xl font-bold tracking-tight text-white font-sans uppercase">
+              Deploy<span className="text-[#0082f6]">Forge</span>
             </span>
           </div>
 

@@ -1,60 +1,82 @@
 "use client";
 
-import { Check, Info } from "lucide-react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { Check, Info, ChevronDown, ChevronUp } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const plans = [
   {
-    name: "Starter",
-    price: "$499",
-    tagline: "Ideal for single-page MVPs and landing page systems.",
+    name: "Starter Launch",
+    price: "$50",
+    time: "3 Days Delivery",
+    tagline: "Professional responsive website for startups or personal brands.",
     features: [
-      "High-speed Next.js & Tailwind build",
-      "Fully responsive mobile layout",
-      "1-click cloud host deployment setup",
-      "Custom domain & SSL configurations",
-      "Git-triggered automatic updates",
-      "7 days of post-launch active support",
+      "3 Pages layout",
+      "Basic Design Customization",
+      "Content Upload & Source Code",
+      "Full Responsive Design",
+      "2 Revisions cycles",
+      "Basic Hosting Setup",
     ],
-    cta: "Deploy Starter MVP",
+    cta: "Order Starter Launch",
     popular: false,
     glow: "rgba(59,130,246,0.05)"
   },
   {
-    name: "Growth",
-    price: "$1,499",
-    tagline: "Best for high-traffic apps needing custom cloud scaling.",
+    name: "Business Pro",
+    price: "$150",
+    time: "5 Days Delivery",
+    tagline: "Advanced business website with custom features and deployment.",
     features: [
-      "Complex multi-page custom Web App",
-      "Dedicated Database (PostgreSQL/MongoDB)",
-      "Docker containerized local & prod environments",
-      "GitHub Actions automated CI/CD pipelines",
-      "Reverse proxy configurations (Nginx/SSL)",
-      "30 days of post-launch active support",
+      "6 Pages layout",
+      "Advanced Design Customization",
+      "Content Upload & Source Code",
+      "4 Revisions + Detailed Comments",
+      "Docker + CI/CD Setup",
+      "Full Responsive Design",
     ],
-    cta: "Scale with Growth",
+    cta: "Scale with Business Pro",
     popular: true,
     glow: "rgba(6,182,212,0.1)"
   },
   {
-    name: "Enterprise",
-    price: "Custom",
-    tagline: "Complete custom infrastructure & ongoing support.",
+    name: "Enterprise Forge",
+    price: "$350",
+    time: "7-10 Days Delivery",
+    tagline: "Complete full-stack web application with DevOps & cloud deployment.",
     features: [
-      "Unlimited page complex SaaS platforms",
-      "Auto-scaling AWS cluster (ECS / ECS Fargate)",
-      "Terraform Infrastructure-as-Code definitions",
-      "Hardened VPC subnets & firewall policies",
-      "Real-time central logging & metrics dashboards",
-      "24/7 SLA uptime support & active updates",
+      "10+ Pages layout",
+      "Premium Custom UI/UX Design",
+      "Content Upload & Source Code",
+      "Unlimited Revisions cycles",
+      "Detailed Code Comments",
+      "Full Cloud Deployment + Monitoring",
     ],
-    cta: "Request Custom Quote",
+    cta: "Request Enterprise Forge",
     popular: false,
     glow: "rgba(139,92,246,0.05)"
   },
 ];
 
+// Parameters for the comparison matrix table
+const comparisonRows = [
+  { param: "Package Name", starter: "Starter Launch", business: "Business Pro", enterprise: "Enterprise Forge" },
+  { param: "Description", starter: "Professional responsive website for startups or personal brands", business: "Advanced business website with custom features and deployment", enterprise: "Complete full-stack web application with DevOps & cloud deployment" },
+  { param: "Number of Pages", starter: "3 Pages", business: "6 Pages", enterprise: "10+ Pages" },
+  { param: "Design Customization", starter: "Basic", business: "Advanced", enterprise: "Premium Custom UI/UX" },
+  { param: "Content Upload", starter: "Yes", business: "Yes", enterprise: "Yes" },
+  { param: "Responsive Design", starter: "Yes", business: "Yes", enterprise: "Yes" },
+  { param: "Include Source Code", starter: "Yes", business: "Yes", enterprise: "Yes" },
+  { param: "Revisions", starter: "2 Revisions", business: "4 Revisions", enterprise: "Unlimited Revisions" },
+  { param: "Detailed Code Comments", starter: "No", business: "Yes", enterprise: "Yes" },
+  { param: "DevOps / Deployment", starter: "Basic Hosting Setup", business: "Docker + CI/CD Setup", enterprise: "Full Cloud Deployment + Monitoring" },
+  { param: "Delivery Time", starter: "3 Days", business: "5 Days", enterprise: "7-10 Days" },
+  { param: "Price", starter: "$50", business: "$150", enterprise: "$350" },
+];
+
 export default function Pricing() {
+  const [showCompare, setShowCompare] = useState(false);
+
   const scrollToContact = () => {
     const element = document.getElementById("contact");
     if (element) {
@@ -84,15 +106,15 @@ export default function Pricing() {
             <span>Pricing plans</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            Transparent Pricing. Built for Scaling.
+            Transparent Packaging & Rates
           </h2>
           <p className="text-slate-400 font-medium text-sm sm:text-base leading-relaxed">
-            Select the plan that matches your current development roadmap. All pricing is transparent and backed by guaranteed delivery milestones.
+            Select the exact package matching your application milestone. No hourly ambiguity, backed by rapid sprint deliveries.
           </p>
         </div>
 
         {/* Pricing Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto mb-16">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -121,14 +143,17 @@ export default function Pricing() {
 
               {/* Plan Header */}
               <div className="space-y-4">
-                <div>
+                <div className="flex items-center justify-between">
                   <h3 className="text-lg font-bold text-white tracking-tight">{plan.name}</h3>
-                  <p className="text-[11px] font-medium text-slate-400 mt-1 leading-normal">{plan.tagline}</p>
+                  <span className="text-[9px] font-bold font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-850 text-brand-cyan">
+                    {plan.time}
+                  </span>
                 </div>
+                <p className="text-[11px] font-medium text-slate-400 leading-normal">{plan.tagline}</p>
                 
                 <div className="flex items-baseline space-x-1 text-white">
                   <span className="text-4xl font-black tracking-tight">{plan.price}</span>
-                  {plan.price !== "Custom" && <span className="text-xs font-medium text-slate-500">/ flat rate</span>}
+                  <span className="text-xs font-medium text-slate-500">/ flat rate</span>
                 </div>
                 
                 <hr className="border-slate-900" />
@@ -162,6 +187,63 @@ export default function Pricing() {
 
             </motion.div>
           ))}
+        </div>
+
+        {/* Interactive Comparison Drawer */}
+        <div className="max-w-5xl mx-auto text-center">
+          <button
+            onClick={() => setShowCompare(!showCompare)}
+            className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl border border-slate-800 bg-slate-950/60 hover:bg-slate-900 hover:border-slate-700 text-xs font-bold text-white transition-all shadow-lg"
+          >
+            <span>{showCompare ? "Hide Matrix Specifications" : "Compare Packages Full Matrix"}</span>
+            {showCompare ? <ChevronUp className="h-4 w-4 text-brand-blue" /> : <ChevronDown className="h-4 w-4 text-brand-blue" />}
+          </button>
+
+          <AnimatePresence>
+            {showCompare && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.4 }}
+                className="mt-8 border border-slate-850 rounded-2xl bg-slate-950/80 backdrop-blur-md overflow-hidden text-left shadow-2xl"
+              >
+                <div className="overflow-x-auto w-full scrollbar-thin">
+                  <table className="w-full text-xs border-collapse">
+                    <thead>
+                      <tr className="bg-slate-900/50 border-b border-slate-800">
+                        <th className="p-4 font-bold text-white uppercase tracking-wider text-left min-w-[150px]">Package Matrix</th>
+                        <th className="p-4 font-bold text-brand-blue uppercase tracking-wider text-left min-w-[200px]">Starter Launch</th>
+                        <th className="p-4 font-bold text-brand-cyan uppercase tracking-wider text-left min-w-[200px]">Business Pro</th>
+                        <th className="p-4 font-bold text-brand-violet uppercase tracking-wider text-left min-w-[200px]">Enterprise Forge</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {comparisonRows.map((row, idx) => (
+                        <tr 
+                          key={idx} 
+                          className={`border-b border-slate-900/60 transition-colors ${
+                            idx % 2 === 0 ? "bg-slate-950/20" : "bg-slate-900/20"
+                          } hover:bg-slate-900/40`}
+                        >
+                          <td className="p-4 font-bold text-slate-400 border-r border-slate-900/60">{row.param}</td>
+                          <td className={`p-4 font-medium border-r border-slate-900/60 ${row.param === "Price" ? "text-lg font-black text-white" : "text-slate-300"}`}>
+                            {row.starter}
+                          </td>
+                          <td className={`p-4 font-medium border-r border-slate-900/60 ${row.param === "Price" ? "text-lg font-black text-brand-cyan" : "text-slate-300"}`}>
+                            {row.business}
+                          </td>
+                          <td className={`p-4 font-medium ${row.param === "Price" ? "text-lg font-black text-brand-violet" : "text-slate-300"}`}>
+                            {row.enterprise}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Pricing notice disclaimer */}

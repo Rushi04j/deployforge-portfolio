@@ -1,6 +1,7 @@
 "use client";
 
-import { Server, ArrowUp } from "lucide-react";
+import { ArrowUp } from "lucide-react";
+import { LogoIcon } from "@/components/Logo";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -33,11 +34,9 @@ export default function Footer() {
           {/* Logo and Tagline */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2.5 cursor-pointer" onClick={scrollToTop}>
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-brand-blue to-brand-cyan shadow-[0_0_10px_rgba(59,130,246,0.3)]">
-                <Server className="h-4.5 w-4.5 text-white" />
-              </div>
-              <span className="text-lg font-bold tracking-tight text-white">
-                Deploy<span className="text-brand-blue">Forge</span>
+              <LogoIcon size={32} />
+              <span className="text-lg font-bold tracking-tight text-white font-sans uppercase">
+                Deploy<span className="text-[#0082f6]">Forge</span>
               </span>
             </div>
             <p className="text-sm text-slate-400 font-medium">
@@ -137,11 +136,18 @@ export default function Footer() {
                 Ready to accelerate your delivery cycle and secure your cloud pipeline? Reach out to us directly.
               </p>
               <a
-                href="mailto:hello@deployforge.com"
-                className="inline-block text-sm text-brand-blue hover:text-brand-cyan hover:underline transition-colors font-semibold"
+                href="mailto:deployforge0@gmail.com"
+                className="inline-block text-sm text-[#0082f6] hover:text-brand-cyan hover:underline transition-colors font-bold"
               >
-                hello@deployforge.com
+                deployforge0@gmail.com
               </a>
+
+              <div className="space-y-1.5 pt-3 border-t border-slate-900/60 text-[11px] text-slate-400 font-semibold">
+                <p className="font-bold text-white uppercase text-[9px] tracking-wider mb-2">Team Leads Contact</p>
+                <p><a href="tel:8087232380" className="hover:text-[#0082f6] transition-colors">8087232380</a> — Rushikesh Joshi</p>
+                <p><a href="tel:8767961588" className="hover:text-[#0082f6] transition-colors">8767961588</a> — Nihant Thorkar</p>
+                <p><a href="tel:7058466581" className="hover:text-[#0082f6] transition-colors">7058466581</a> — Yash Hedaoo</p>
+              </div>
             </div>
           </div>
         </div>
