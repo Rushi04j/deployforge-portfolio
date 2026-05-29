@@ -16,7 +16,7 @@ export default function Contact() {
     name: "",
     email: "",
     projectType: "Full-Stack Web Dev",
-    budget: "$499 - Starter MVP",
+    budget: "$50 - Starter Launch",
     message: "",
   });
 
@@ -106,7 +106,7 @@ export default function Contact() {
           name: "",
           email: "",
           projectType: "Full-Stack Web Dev",
-          budget: "$499 - Starter MVP",
+          budget: "$50 - Starter Launch",
           message: "",
         });
       } else {
@@ -209,9 +209,10 @@ export default function Contact() {
                     onFocus={() => handleFocus("budget")}
                     className="w-full px-4.5 py-3 rounded-xl bg-slate-900/60 border border-slate-800 text-sm font-semibold text-white focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all cursor-pointer"
                   >
-                    <option value="$499 - Starter MVP" className="bg-slate-950">$499 - Starter MVP</option>
-                    <option value="$1,499 - Growth Package" className="bg-slate-950">$1,499 - Growth Package</option>
-                    <option value="Custom Enterprise Solution" className="bg-slate-950">Custom Enterprise Quote</option>
+                    <option value="$50 - Starter Launch" className="bg-slate-950">$50 - Starter Launch</option>
+                    <option value="$150 - Business Pro" className="bg-slate-950">$150 - Business Pro</option>
+                    <option value="$350 - Enterprise Forge" className="bg-slate-950">$350 - Enterprise Forge</option>
+                    <option value="Custom Enterprise Quote" className="bg-slate-950">Custom Enterprise Quote</option>
                   </select>
                 </div>
               </div>
@@ -273,7 +274,7 @@ export default function Contact() {
                 </div>
                 <div className="flex items-center space-x-3 text-xs font-semibold text-slate-300">
                   <Globe className="h-4.5 w-4.5 text-brand-cyan shrink-0" />
-                  <span>deployforge.com</span>
+                  <a href="https://deployforge.in" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline transition-all">deployforge.in</a>
                 </div>
                 <div className="flex items-center space-x-3 text-xs font-semibold text-slate-300">
                   <MapPin className="h-4.5 w-4.5 text-[#8b5cf6] shrink-0" />

@@ -17,7 +17,7 @@ const terminalLogs = [
   { text: "[success] SSL certificate verified & attached (instant https)", delay: 700, type: "success" },
   { text: "[success] Health Check PASSED: 200 OK (latency: 18ms)", delay: 600, type: "success" },
   { text: "[success] DeployForge pipeline complete! App live globally.", delay: 500, type: "highlight" },
-  { text: "https://production.deployforge.com", delay: 200, type: "link" }
+  { text: "https://production.deployforge.in", delay: 200, type: "link" }
 ];
 
 export default function Hero() {

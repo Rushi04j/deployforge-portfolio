@@ -30,19 +30,7 @@ export default function Footer() {
             {/* Marketplace & Social Links */}
             <div className="flex items-center space-x-4 pt-2">
               <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-brand-blue/50 transition-all duration-300"
-                aria-label="GitHub"
-              >
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                  <path d="M9 18c-4.51 2-5-2-7-2" />
-                </svg>
-              </a>
-              <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/deployforge0/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-brand-blue/50 transition-all duration-300"
@@ -55,7 +43,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://upwork.com"
+                href="https://www.upwork.com/freelancers/~015e119bee32740a71?mp_source=share"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-green-400 hover:border-green-500/30 transition-all duration-300"
@@ -63,7 +51,7 @@ export default function Footer() {
                 Upwork
               </a>
               <a
-                href="https://fiverr.com"
+                href="https://www.fiverr.com/s/rEy8e47"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-green-500 hover:border-green-500/30 transition-all duration-300"

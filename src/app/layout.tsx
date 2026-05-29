@@ -29,15 +29,15 @@ export const metadata: Metadata = {
     "Terraform Automation",
     "Nginx Server Hardening"
   ],
-  authors: [{ name: "DeployForge Team", url: "https://deployforge.com" }],
+  authors: [{ name: "DeployForge Team", url: "https://deployforge.in" }],
   openGraph: {
     title: "DeployForge — From Code to Cloud | Development to Deployment",
     description: "Premium tech startup crafting state-of-the-art web platforms and highly resilient cloud architectures with zero downtime.",
-    url: "https://deployforge.com",
+    url: "https://deployforge.in",
     siteName: "DeployForge",
     images: [
       {
-        url: "https://deployforge.com/og-image.png", // High-fidelity placeholder
+        url: "https://deployforge.in/og-image.png", // High-fidelity placeholder
         width: 1200,
         height: 630,
         alt: "DeployForge — Built for Scale",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "DeployForge — From Code to Cloud",
     description: "Full-Stack engineering agency and DevOps automated deployment experts.",
-    images: ["https://deployforge.com/og-image.png"],
+    images: ["https://deployforge.in/og-image.png"],
   },
 };
 

@@ -2,20 +2,29 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { MongoClient } from "mongodb";
+import { cookies } from "next/headers";
+import { verifyToken, getSessionSecret } from "@/lib/auth";
 
 const LOCAL_DB_PATH = path.join(process.cwd(), "src", "data", "contacts.json");
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const key = searchParams.get("key");
+    // Cryptographic Session Verification
+    const cookieStore = await cookies();
+    const sessionCookie = cookieStore.get("admin_session");
 
-    const expectedAdminKey = process.env.ADMIN_KEY || "admin123";
-
-    // Simple security audit gate
-    if (key !== expectedAdminKey) {
+    if (!sessionCookie || !sessionCookie.value) {
       return NextResponse.json(
-        { success: false, error: "Access Denied: Invalid Security Token." },
+        { success: false, error: "Access Denied: Session cookie missing." },
+        { status: 401 }
+      );
+    }
+
+    const payload = await verifyToken(sessionCookie.value, getSessionSecret());
+
+    if (!payload || payload.role !== "admin") {
+      return NextResponse.json(
+        { success: false, error: "Access Denied: Invalid cryptographic session." },
         { status: 401 }
       );
     }

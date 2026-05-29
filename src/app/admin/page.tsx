@@ -17,28 +17,45 @@ export default function AdminDashboard() {
   const [passcode, setPasscode] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); // Start loading to check session on mount
   const [error, setError] = useState("");
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [source, setSource] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const response = await fetch("/api/admin/session");
+        const data = await response.json();
+        if (data.isAuthenticated) {
+          setIsAuthenticated(true);
+          await fetchInquiries();
+        }
+      } catch (err) {
+        console.error("Session verification failure:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkSession();
+  }, []);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (passcode.trim() === "") return;
-    fetchInquiries(passcode);
-  };
-
-  const fetchInquiries = async (keyToUse: string) => {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch(`/api/contact/retrieve?key=${keyToUse}`);
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ passcode }),
+      });
       const data = await response.json();
 
       if (response.status === 200 && data.success) {
         setIsAuthenticated(true);
-        setInquiries(data.contacts || []);
-        setSource(data.source || "Unknown");
+        await fetchInquiries();
       } else {
         setError(data.error || "Authentication failed: Invalid passcode.");
       }
@@ -49,11 +66,65 @@ export default function AdminDashboard() {
     }
   };
 
-  const refreshData = () => {
-    if (passcode) {
-      fetchInquiries(passcode);
+  const fetchInquiries = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await fetch("/api/contact/retrieve");
+      const data = await response.json();
+
+      if (response.status === 200 && data.success) {
+        setInquiries(data.contacts || []);
+        setSource(data.source || "Unknown");
+      } else if (response.status === 401) {
+        setIsAuthenticated(false);
+        setError("Session expired. Please re-establish authentication.");
+      } else {
+        setError(data.error || "Failed to load corporate telemetry logs.");
+      }
+    } catch {
+      setError("Critical network exception: API unreachable.");
+    } finally {
+      setLoading(false);
     }
   };
+
+  const refreshData = () => {
+    fetchInquiries();
+  };
+
+  const handleLogout = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("/api/admin/logout", {
+        method: "POST",
+      });
+      const data = await response.json();
+      if (data.success) {
+        setIsAuthenticated(false);
+        setPasscode("");
+        setInquiries([]);
+        setSelectedInquiry(null);
+      }
+    } catch (err) {
+      console.error("Logout execution failed:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Initial loading state to prevent screen flickers while checking session
+  if (loading && !isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#030712] flex items-center justify-center p-4">
+        <div className="absolute inset-0 grid-overlay pointer-events-none" />
+        <div className="flex flex-col items-center space-y-4">
+          <span className="flex h-8 w-8 border-2 border-brand-blue/30 border-t-brand-blue rounded-full animate-spin" />
+          <p className="text-xs font-mono text-slate-400">Verifying secure credentials...</p>
+        </div>
+      </div>
+    );
+  }
 
   // Login Screen
   if (!isAuthenticated) {
@@ -81,7 +152,7 @@ export default function AdminDashboard() {
                   type="password"
                   value={passcode}
                   onChange={(e) => setPasscode(e.target.value)}
-                  placeholder="Enter admin passcode (default: admin123)"
+                  placeholder="Enter admin access passcode"
                   required
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-900/60 border border-slate-800 text-sm font-semibold text-white placeholder-slate-500 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all"
                 />
@@ -141,6 +212,15 @@ export default function AdminDashboard() {
               title="Refresh Logs"
             >
               <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
+            </button>
+            <button
+              onClick={handleLogout}
+              disabled={loading}
+              className="flex items-center justify-center px-4 py-2.5 rounded-xl bg-red-950/20 border border-red-900/40 text-red-400 hover:bg-red-950/40 hover:border-red-800 transition-all text-xs font-bold disabled:opacity-50 space-x-2"
+              title="Terminate Secure Link"
+            >
+              <ShieldAlert className="h-4 w-4" />
+              <span className="hidden sm:inline">Disconnect</span>
             </button>
           </div>
         </div>
